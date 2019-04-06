@@ -1,15 +1,11 @@
-import {getHTML, getTwitterFollowers, getInstaFollowers} from './lib/scrapper'
+import express from 'express';
+import {getInstaCount, getTwitterCount} from './lib/scrapper'
+import './lib/cron'
+const app = express();
 
-async function go() {
-    const tPromise = getHTML('https://twitter.com/vikkyiam');
-    const iPromise = getHTML('https://instagram.com/wesbos');
+app.get('/scrap', async (req, res, next) => {
+    const [iCount, tCount] = await Promise.all([getInstaCount(), getTwitterCount()]);
+    res.json({iCount, tCount})
+});
 
-    const [twitterHTML, instaHTML] = await Promise.all([tPromise, iPromise])
-
-    const twCount = await getTwitterFollowers(twitterHTML)
-    const instagramCount = await getInstaFollowers(instaHTML)
-
-    console.log(`you have ${twCount} followers and ${instagramCount} followers`)
-    // console.log(html)
-}
-go()
+app.listen(1234, () => {console.log('listening on port 1234')})
