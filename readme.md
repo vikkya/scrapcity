@@ -1,3 +1,3 @@
 ## Scraping Twitter and Instagram followers
 
-###### with node, express, axios, esm, cheerio
+###### Frontend(react, react-dom, next, date-fns), Backend(node, express, axios, esm, cheerio, cron-jobs, cors,)
