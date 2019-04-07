@@ -36,11 +36,11 @@ async function runCron() {
     const [iCount, tCount] = await Promise.all([getInstaCount(), getTwitterCount()]);
     // console.log({iCount, tCount})
     db.get('twitter').push({
-        "Date": Date.now(),
+        "date": Date.now(),
         "count": tCount
     }).write();
     db.get('instagram').push({
-        "Date": Date.now(),
+        "date": Date.now(),
         "count": iCount
     }).write();
     console.log('Done!')

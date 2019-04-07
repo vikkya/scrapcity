@@ -6,23 +6,21 @@ function useScrap(){
     const [scraps, setScraps] = useState({
         twitter: [], instagram: [],
     });
-    useEffect(function () {
-        (async () => {
-        console.log('mounting and updating');
-        const res =  await fetch('http://localhost:1234/data');
+    async function fetchScrap() {
+        const res =  await fetch('http://localhost:1234/aggregate');
         const data = await res.json()
         console.log(data);
         setScraps(data)
-        })()
+    }
+    useEffect(() => {
+        fetchScrap();
     }, [])
-    return scraps;
+    return {scraps, fetchScrap};
 }
 export default function Page({children}) {
-    const scraps = useScrap()
+    const hookInfo = useScrap()
     return (
-    <ScrapProvider value={{
-       scraps,
-    }}>
+    <ScrapProvider value={hookInfo}>
         <div className="page">{children}</div>
     </ScrapProvider>
     )

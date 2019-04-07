@@ -1,14 +1,16 @@
 import {useContext} from 'react';
-import {distanceInWords} from 'date-fns';
+import Table from './Table';
+import Chart from './Chart';
 import {ScrapContext} from './ScrapContext';
 export default function Data () {
-    const {scraps} = useContext(ScrapContext);
+    const {scraps, fetchScrap} = useContext(ScrapContext);
     return <div>
-        <h2>Your Data: </h2>
-        <ul>
-            {scraps.twitter.map(scrap => (
-                <li key={scrap.Date}>{scrap.count} - {distanceInWords(new Date(scrap.Date), new Date())}</li>
-            ))}
-        </ul>
+        <button type="button" onClick={fetchScrap}>Refresh Data</button>
+        <h2>Twitter: </h2>
+        <Table scraps={scraps.twitter}/>
+        <Chart scraps={scraps.twitter}/>
+        <h2>Instagram: </h2>
+        <Table scraps={scraps.instagram}/>
+        <Chart scraps={scraps.instagram}/>
     </div>
 }
